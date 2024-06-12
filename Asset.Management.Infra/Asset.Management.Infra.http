@@ -1,0 +1,6 @@
+@Asset.Management.Infra_HostAddress = http://localhost:5256
+
+GET {{Asset.Management.Infra_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
