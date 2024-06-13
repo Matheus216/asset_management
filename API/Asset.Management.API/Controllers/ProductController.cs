@@ -1,3 +1,7 @@
+using Asset.Management.Domain.Entities;
+using Asset.Management.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Asset.Management.API.Controllers;
 
 [ApiController]
@@ -13,8 +17,8 @@ public class ProductController : ControllerBase
 
 
     [HttpPost]
-    public async Task<Product> CreateAsync([FromBody] Product product)
+    public async Task<ActionResult> CreateAsync([FromBody] Product product)
     {
-        return _productService.CreateAsync(product);
+        return Ok(_productService.CreateAsync(product));
     }
 }
