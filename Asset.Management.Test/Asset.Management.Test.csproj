@@ -20,4 +20,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Asset.Management.Domain\Asset.Management.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
