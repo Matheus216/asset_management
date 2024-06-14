@@ -11,7 +11,7 @@ namespace Asset.Management.Infra.Repository;
 public class ProductRepository : BaseRepository<Product>, IProductRepository
 {
     public ProductRepository(IConfiguration configuration) 
-        : base(configuration, "Product")
+        : base(configuration, nameof(Product))
     {
     }
 

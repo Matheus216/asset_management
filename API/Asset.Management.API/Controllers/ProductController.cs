@@ -20,6 +20,12 @@ public class ProductController : ControllerBase
         return Ok(await _productService.GetListAsync());
     }
 
+    [HttpGet("GetById/{id}")]
+    public async Task<ActionResult<IEnumerable<Product>>> GetById(string id)
+    {
+        return Ok(await _productService.GetById(id));
+    }
+
     [HttpGet("expiration/{daysToExpiration}")]
     public async Task<ActionResult<IEnumerable<Product>>> GetCloseExpirationAsync(int daysToExpiration)
     {

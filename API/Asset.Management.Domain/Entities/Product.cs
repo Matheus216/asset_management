@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Asset.Management.Domain.Entities;
@@ -7,9 +8,9 @@ public class Product
 {
     public Product()
     {
-        this.Id = "";
     }
 
+    [BsonElement("_id")]
     [BsonId]
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
     public string Id { get; set;}

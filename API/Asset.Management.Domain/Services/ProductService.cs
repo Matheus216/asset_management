@@ -19,6 +19,12 @@ public class ProductService : IProductService
         return response; 
     }
 
+    public async Task<Result<Product>> GetById(string id)
+    {
+        var response = await _productRepository.GetByIdAsync(id); 
+        return response; 
+    }
+
     public async Task<Result<List<Product>>> GetListCloseExpirationAsync(int daysToExpiration)
     {
         var response = await _productRepository.GetProductsToExpirationAsync(daysToExpiration); 
@@ -28,4 +34,5 @@ public class ProductService : IProductService
 
         return response;
     }
+
 }

@@ -35,15 +35,21 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
     {
         try
         {
-            var builderFilter = Builders<T>.Filter;
-            var builderDefinition = builderFilter.Eq("_id", new ObjectId(id));
+            if (ObjectId.TryParse(id, out ObjectId obj))
+            {
+                var builderFilter = Builders<T>.Filter.Eq("_id", obj);
 
-            var response = await _collection.FindAsync<T>(builderDefinition);
-            return new Result<T>(response.SingleOrDefault());
+                var response = await _collection
+                    .Find(builderFilter).FirstOrDefaultAsync(); 
+                    
+                return new Result<T>(response);
+            }
+            else
+                return new Result<T>("Erro na conversão do identificador do produto");
         }
         catch (Exception ex)
         {
-            return new Result<T>(ex.Message ?? "Problemas para inserir o herói");
+            return new Result<T>(ex.Message ?? "Problemas encontrar o registro");
         }
     }
 

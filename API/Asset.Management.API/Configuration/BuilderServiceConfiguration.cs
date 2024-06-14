@@ -1,14 +1,9 @@
 using Asset.Management.Domain.Interfaces;
 using Asset.Management.Domain.Services;
 using Asset.Management.Infra.Repository;
-using Microsoft.AspNetCore.Builder;
 
 namespace Asset.Management.API.Configuration;
 
-public class BuilderServiceConfiguration
-{
-
-}
 
 public static class BuilderServiceConfigurationExtensions
 {
@@ -16,5 +11,7 @@ public static class BuilderServiceConfigurationExtensions
     {
         builder.Services.AddSingleton<IProductRepository, ProductRepository>();
         builder.Services.AddSingleton<IProductService, ProductService>();
+        builder.Services.AddSingleton<ITransactionService, TransactionService>();
+        builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
     }
 }
