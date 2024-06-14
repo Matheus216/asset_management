@@ -1,5 +1,6 @@
-using Asset.Management.Domain.Entities;
 using Asset.Management.Domain.Interfaces;
+using Asset.Management.Domain.Entities;
+using Asset.Management.Domain.DTOs;
 
 namespace Asset.Management.Domain.Services;
 
@@ -12,10 +13,19 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
 
-    public async Task<Product> CreateAsync(Product product)
+    public async Task<Result<IEnumerable<Product>>> GetListAsync()
     {
-        var data = await _productRepository.Insert(product);
+        var response = await _productRepository.GetListAsync(); 
+        return response; 
+    }
 
-        return data.Data ?? new Product();
+    public async Task<Result<List<Product>>> GetListCloseExpirationAsync(int daysToExpiration)
+    {
+        var response = await _productRepository.GetProductsToExpirationAsync(daysToExpiration); 
+
+        if (!(response?.Success ?? false))
+            return response ?? new Result<List<Product>>("Erro interno"); 
+
+        return response;
     }
 }

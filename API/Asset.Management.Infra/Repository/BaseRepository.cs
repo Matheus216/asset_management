@@ -18,7 +18,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
         _collection = database.GetCollection<T>(collection);
     }
 
-    public async Task<Result<T>> Insert(T input)
+    public async Task<Result<T>> InsertAsync(T input)
     {
         try
         {
@@ -31,7 +31,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
         }
     }
 
-    public async Task<Result<T>> GetById(string id)
+    public async Task<Result<T>> GetByIdAsync(string id)
     {
         try
         {
@@ -47,7 +47,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
         }
     }
 
-    public async Task<Result<T>> Delete(T obj)
+    public async Task<Result<T>> DeleteAsync(T obj)
     {
         try
         {
@@ -65,7 +65,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
         }
     }
 
-    public async Task<Result<T>> Update(T input)
+    public async Task<Result<T>> UpdateAsync(T input)
     {
         try
         {
@@ -81,7 +81,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T>
         }
     }
 
-    public async Task<Result<IEnumerable<T>>> GetList()
+    public async Task<Result<IEnumerable<T>>> GetListAsync()
     {
         try
         {

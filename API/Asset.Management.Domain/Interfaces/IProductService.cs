@@ -1,8 +1,10 @@
 using Asset.Management.Domain.Entities;
+using Asset.Management.Domain.DTOs;
 
 namespace Asset.Management.Domain.Interfaces;
 
 public interface IProductService
 {
-    Task<Product> CreateAsync(Product product);
+    Task<Result<IEnumerable<Product>>> GetListAsync();
+    Task<Result<List<Product>>> GetListCloseExpirationAsync(int daysToExpiration);
 }

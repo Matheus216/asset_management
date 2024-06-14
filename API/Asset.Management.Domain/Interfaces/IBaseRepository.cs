@@ -4,9 +4,9 @@ namespace Asset.Management.Domain.Interfaces;
 
 public interface IBaseRepository<T>
 {
-    Task<Result<T>> Insert(T knight);
-    Task<Result<T>> GetById(string id);
-    Task<Result<T>> Delete(T id);
-    Task<Result<T>> Update(T knight);
-    Task<Result<IEnumerable<T>>> GetList();
+    Task<Result<T>> InsertAsync(T knight);
+    Task<Result<T>> GetByIdAsync(string id);
+    Task<Result<T>> DeleteAsync(T id);
+    Task<Result<T>> UpdateAsync(T knight);
+    Task<Result<IEnumerable<T>>> GetListAsync();
 }

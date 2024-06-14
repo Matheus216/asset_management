@@ -1,5 +1,5 @@
-using Asset.Management.Domain.Entities;
 using Asset.Management.Domain.Interfaces;
+using Asset.Management.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Asset.Management.API.Controllers;
@@ -14,11 +14,15 @@ public class ProductController : ControllerBase
     {
         _productService = productService;
     }
-
-
-    [HttpPost]
-    public async Task<ActionResult> CreateAsync([FromBody] Product product)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> GetListAsync()
     {
-        return Ok(_productService.CreateAsync(product));
+        return Ok(await _productService.GetListAsync());
+    }
+
+    [HttpGet("expiration/:daysToExpiration")]
+    public async Task<ActionResult<IEnumerable<Product>>> GetCloseExpirationAsync(int daysToExpiration)
+    {
+        return Ok(await _productService.GetListCloseExpirationAsync(daysToExpiration));
     }
 }
