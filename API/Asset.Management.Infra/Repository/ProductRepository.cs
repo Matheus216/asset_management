@@ -19,11 +19,14 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         try
         {
-            var filterDaysAgo = DateTime.Now.AddDays(-daysToExpiration);
+            var filterDaysAgo = DateTime.Now.AddDays(daysToExpiration);
 
             var filter = Builders<Product>
                 .Filter
-                .Lt("expirationDate", filterDaysAgo);
+                .And (
+                    Builders<Product>.Filter.Gte(x => x.ExpirationDate, DateTime.Now),
+                    Builders<Product>.Filter.Lte(x => x.ExpirationDate, filterDaysAgo)
+                );
 
             var response = await _collection.Find(filter).ToListAsync();
             return new Result<List<Product>>(response);

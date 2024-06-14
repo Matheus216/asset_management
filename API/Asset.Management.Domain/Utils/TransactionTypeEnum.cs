@@ -1,7 +1,7 @@
 namespace Asset.Management.Domain.Utils;
 
 
-public enum OrderTypeEnum
+public enum TransactionTypeEnum
 {
     Sale,
     Purchase    

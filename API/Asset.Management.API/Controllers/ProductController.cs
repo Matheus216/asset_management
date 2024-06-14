@@ -20,7 +20,7 @@ public class ProductController : ControllerBase
         return Ok(await _productService.GetListAsync());
     }
 
-    [HttpGet("expiration/:daysToExpiration")]
+    [HttpGet("expiration/{daysToExpiration}")]
     public async Task<ActionResult<IEnumerable<Product>>> GetCloseExpirationAsync(int daysToExpiration)
     {
         return Ok(await _productService.GetListCloseExpirationAsync(daysToExpiration));
