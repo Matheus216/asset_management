@@ -20,6 +20,39 @@ public class TransactionController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Result<Transaction>>> CreateTransactionAsync([FromBody] TransactionRequestDTO request)
     {
-        return Ok(await _transactionService.CreateOrderAsync(request));
+        try
+        {
+            var response = await _transactionService.CreateOrderAsync(request);
+
+            if ((response?.Success ?? false) == false)
+                return BadRequest(response);
+
+            return Created(string.Empty, response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new Result<Transaction>(ex.Message));
+        }
+    }
+
+    [HttpGet("GetById/{id}")]
+    public async Task<ActionResult<Result<Transaction>>> GetTransactionById(string id)
+    {
+        try
+        {
+            var response = await _transactionService.GetByIdAsync(id);
+
+            if ((response?.Success ?? false) == false)
+                return BadRequest(response);
+            
+            if (response?.Success == true && response.Data == null)
+                return NotFound(response);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new Result<Transaction>(ex.Message));
+        }
     }
 }

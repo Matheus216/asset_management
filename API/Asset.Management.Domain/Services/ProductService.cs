@@ -19,7 +19,7 @@ public class ProductService : IProductService
         return response; 
     }
 
-    public async Task<Result<Product>> GetById(string id)
+    public async Task<Result<Product>> GetByIdAsync(string id)
     {
         var response = await _productRepository.GetByIdAsync(id); 
         return response; 

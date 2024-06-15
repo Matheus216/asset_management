@@ -1,19 +1,19 @@
 using Asset.Management.Domain.DTOs.Transaction;
 using Asset.Management.Domain.Interfaces;
-using Asset.Management.Domain.DTOs;
 using Asset.Management.Domain.Entities;
+using Asset.Management.Domain.DTOs;
 
 namespace Asset.Management.Domain.Services;
 
 public class TransactionService : ITransactionService
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
     private readonly ITransactionRepository _transactionRepository;
 
-    public TransactionService(IProductRepository productRepository,
+    public TransactionService(IProductService productService,
         ITransactionRepository transactionRepository)
     {
-        this._productRepository = productRepository;
+        this._productService = productService;
         this._transactionRepository = transactionRepository;
     }
 
@@ -23,7 +23,7 @@ public class TransactionService : ITransactionService
         if (responseValidateRequest.Any())
             return new Result<Transaction>(responseValidateRequest);
 
-        var productResponse = await _productRepository.GetByIdAsync(request.ProductId);
+        var productResponse = await _productService.GetByIdAsync(request.ProductId);
 
         if ((productResponse?.Success ?? false) == false || productResponse?.Data == null)
             return new Result<Transaction>
@@ -45,4 +45,7 @@ public class TransactionService : ITransactionService
         var responseInsered = await _transactionRepository.InsertAsync(transaction); 
         return responseInsered; 
     }
+
+    public async Task<Result<Transaction>> GetByIdAsync(string id) 
+        => await _transactionRepository.GetByIdAsync(id);
 }

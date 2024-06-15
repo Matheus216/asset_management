@@ -6,4 +6,5 @@ namespace Asset.Management.Domain.Interfaces;
 public interface ITransactionService
 {
     Task<Result<Transaction>> CreateOrderAsync(TransactionRequestDTO request);
+    Task<Result<Transaction>> GetByIdAsync(string id);
 }

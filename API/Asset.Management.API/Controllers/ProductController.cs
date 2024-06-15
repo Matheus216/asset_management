@@ -1,6 +1,7 @@
 using Asset.Management.Domain.Interfaces;
 using Asset.Management.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Asset.Management.Domain.DTOs;
 
 namespace Asset.Management.API.Controllers;
 
@@ -15,20 +16,65 @@ public class ProductController : ControllerBase
         _productService = productService;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetListAsync()
+    public async Task<ActionResult<Result<IEnumerable<Product>>>> GetListAsync()
     {
-        return Ok(await _productService.GetListAsync());
+        try
+        {
+            var response = await _productService.GetListAsync();
+
+            if ((response?.Success ?? false) == false)
+                return BadRequest(response);
+
+            if (response?.Success == true && !(response?.Data ?? new List<Product>()).Any())
+                return NotFound(response);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new Result<IEnumerable<Product>>(ex.Message));
+        }
     }
 
     [HttpGet("GetById/{id}")]
-    public async Task<ActionResult<IEnumerable<Product>>> GetById(string id)
+    public async Task<ActionResult<Result<Product>>> GetById(string id)
     {
-        return Ok(await _productService.GetById(id));
+        try
+        {
+            var response = await _productService.GetByIdAsync(id);
+
+            if ((response?.Success ?? false) == false)
+                return BadRequest(response);
+
+            if (response?.Success == true && response?.Data == null)
+                return NotFound(response);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new Result<IEnumerable<Product>>(ex.Message));
+        }
     }
 
     [HttpGet("expiration/{daysToExpiration}")]
-    public async Task<ActionResult<IEnumerable<Product>>> GetCloseExpirationAsync(int daysToExpiration)
+    public async Task<ActionResult<Result<IEnumerable<Product>>>> GetCloseExpirationAsync(int daysToExpiration)
     {
-        return Ok(await _productService.GetListCloseExpirationAsync(daysToExpiration));
+        try
+        {
+            var response = await _productService.GetListCloseExpirationAsync(daysToExpiration);
+
+            if ((response?.Success ?? false) == false)
+                return BadRequest(response);
+
+            if (response?.Success == true && !(response?.Data ?? new List<Product>()).Any())
+                return NotFound(response);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new Result<IEnumerable<Product>>(ex.Message));
+        }
     }
 }
