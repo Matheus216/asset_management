@@ -1,9 +1,10 @@
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Asset.Management.Domain.Interfaces;
 using Asset.Management.Domain.Entities;
+using Asset.Management.Domain.Utils;
 using Asset.Management.Domain.DTOs;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
 
 namespace Asset.Management.Domain.Services;
 
@@ -63,4 +64,17 @@ public class ProductService : IProductService
         return response;
     }
 
+    public async Task<Result<Product>> RecalculateAllowQuantity(TransactionTypeEnum transactionType, int quantity, Product product)
+    {
+        if (transactionType == TransactionTypeEnum.Purchase)
+            product.AvailableQuantity -= quantity;
+        else
+            product.AvailableQuantity += quantity;
+
+        var updated = await _productRepository.UpdateAsync(product);
+
+        _cache.Remove("Products");
+
+        return updated;
+    }
 }

@@ -20,6 +20,8 @@ public class TransactionService : ITransactionService
     public async Task<Result<Transaction>> CreateOrderAsync(TransactionRequestDTO request)
     {
         var responseValidateRequest = request.ValidateStructureRequest();
+        var rulesValidations = new List<string>(); 
+
         if (responseValidateRequest.Any())
             return new Result<Transaction>(responseValidateRequest);
 
@@ -28,9 +30,13 @@ public class TransactionService : ITransactionService
         if ((productResponse?.Success ?? false) == false || productResponse?.Data == null)
             return new Result<Transaction>
             (
-                productResponse?.MessagesError ??
-                new List<string> { "Erro ao consultar produto" }
+                "Erro ao buscar produto ou não encontrado" 
             );
+
+        RulesValidation(productResponse.Data, request.Quantity, ref rulesValidations);
+
+        if (rulesValidations.Any())
+            return new Result<Transaction>(rulesValidations);
 
         var transaction = new Transaction( 
             request.ProductId,
@@ -43,7 +49,20 @@ public class TransactionService : ITransactionService
         );
 
         var responseInsered = await _transactionRepository.InsertAsync(transaction); 
+
+        if (responseInsered.Success)
+            await _productService.RecalculateAllowQuantity(request.TypeTransaction, request.Quantity, productResponse.Data);
+
         return responseInsered; 
+    }
+
+    private void RulesValidation(Product product,int quantity, ref List<string> rulesMessage) 
+    {
+        if (product?.ExpirationDate < DateTime.Now)
+            rulesMessage.Add("Produto expirado");
+        
+        if (product?.AvailableQuantity < quantity)
+            rulesMessage.Add("Quantidade de ativos não disponíveis");
     }
 
     public async Task<Result<Transaction>> GetByIdAsync(string id) 
