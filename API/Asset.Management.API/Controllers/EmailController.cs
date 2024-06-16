@@ -1,4 +1,5 @@
 using Asset.Management.Domain.Interfaces;
+using Asset.Management.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Asset.Management.API.Controllers;
@@ -15,9 +16,18 @@ public class EmailController : ControllerBase
         _emailService = emailService;
     }
 
-    [HttpPost]
-    public async Task Send()
+    [HttpPost("{daysToExpiration}")]
+    public async Task<Result<string>> Send(string daysToExpiration)
     {
-        var result = await _emailService.SendEmailAsync();
+        try
+        {
+            var result = await _emailService.SendEmailAsync(daysToExpiration);
+            return result; 
+            
+        }
+        catch (Exception ex)
+        {
+            return new Result<string>(ex.Message);
+        }
     }
 }
