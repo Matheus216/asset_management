@@ -42,9 +42,11 @@ Passos para instalar o projeto:
 Instruções para rodar o projeto localmente:
 
 ### Usando Docker
+* Garanta que esteja instalado o [docker-compose](https://docs.docker.com/compose/) em sua máquina
+
 1. Construa a imagem Docker:
     ```sh
-    docker-compose build
+    docker-compose build / docker compose build
     ```
 2. Rode o contêiner:
     ```sh
@@ -71,7 +73,7 @@ dotnet run
 ## Uso
 Instruções de uso ou exemplos de como utilizar a aplicação:
 
-#### GET /api/produtos
+#### GET http://localhost:8080/api/produtos
 Retorna uma lista de itens.
 
 - **URL**: `/api/produtos`
@@ -104,7 +106,7 @@ Retorna uma lista de itens.
     }
     ```
 
-#### GET /api/produtos/{id}
+#### GET http://localhost:8080/api/produtos/{id}
 Retorna um único produto pelo id .
 
 - **URL**: `/api/produtos/{id}`
@@ -129,7 +131,7 @@ Retorna um único produto pelo id .
       }
     }
     ```
-#### GET /api/produtos/{daysToExpiration}
+#### GET http://localhost:8080/api/produtos/{daysToExpiration}
 Retorna uma lista de prdutos próximo ao vencimento.
 
 - **URL**: `/api/produtos/{daysToExpiration}`
@@ -163,7 +165,7 @@ Retorna uma lista de prdutos próximo ao vencimento.
     }
     ```
 
-#### POST /api/transaction
+#### POST http://localhost:8080/api/transaction
 Cria uma nova transação.
 
 - **URL**: `/api/transaction`
@@ -197,7 +199,7 @@ Cria uma nova transação.
       }
     ```
 
-#### GET /api/transaction/{id}
+#### GET http://localhost:8080/api/transaction/{id}
 Retorna uma única transação pelo id.
 
 - **URL**: `/api/transaction/{id}`
@@ -225,7 +227,7 @@ Retorna uma única transação pelo id.
     }
     ```
 
-#### POST /api/email/{daysToExpiration}
+#### POST http://localhost:8080/api/email/{daysToExpiration}
 Envia um email para os administradores informando as transações próximas do vencimento, informar somente os dias a frente para validação e o sistema vai localizar quem está como administrador do sistema e realizar um envio com um template pré criado.<br /> 
 PS: como é somente uma prova de conceito o método não foi implementado
 
