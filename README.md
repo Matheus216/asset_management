@@ -20,6 +20,7 @@ Lista das principais tecnologias e ferramentas usadas no projeto:
 - [MondoDB](https://www.mongodb.com/)
 - [Redis](https://redis.io/)
 - [Docker](https://www.docker.com/)
+- [Nginx](https://nginx.org/en/)
 
 ## Pré-requisitos
 Lista de pré-requisitos necessários para rodar o projeto:
