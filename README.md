@@ -74,10 +74,10 @@ dotnet run
 ## Uso
 Instruções de uso ou exemplos de como utilizar a aplicação:
 
-#### GET http://localhost:8080/api/produtos
+#### GET http://localhost:8080/api/Product/
 Retorna uma lista de itens.
 
-- **URL**: `/api/produtos`
+- **URL**: `/api/product`
 - **Método HTTP**: `GET`
 - **Parâmetros de Consulta**: Nenhum
 - **Resposta**:
@@ -107,10 +107,10 @@ Retorna uma lista de itens.
     }
     ```
 
-#### GET http://localhost:8080/api/produtos/{id}
+#### GET http://localhost:8080/api/Product/{id}
 Retorna um único produto pelo id .
 
-- **URL**: `/api/produtos/{id}`
+- **URL**: `/api/product/{id}`
 - **Método HTTP**: `GET`
 - **Parâmetro da rota**:
    - `id` (string) ID do produto
@@ -132,10 +132,10 @@ Retorna um único produto pelo id .
       }
     }
     ```
-#### GET http://localhost:8080/api/produtos/{daysToExpiration}
+#### GET http://localhost:8080/api/Product/{daysToExpiration}
 Retorna uma lista de prdutos próximo ao vencimento.
 
-- **URL**: `/api/produtos/{daysToExpiration}`
+- **URL**: `/api/product/{daysToExpiration}`
 - **Método HTTP**: `GET`
 - **Parâmetro da rota**:
    - `daysToExpiration` (string) dias a frente para expirar que deseja buscar
