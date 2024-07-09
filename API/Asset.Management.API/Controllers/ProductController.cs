@@ -12,10 +12,10 @@ public class ProductController : ControllerBase
     private readonly IProductService _productService;
     private readonly ILogger logger; 
 
-    public ProductController(IProductService productService, ILoggerProvider loggerProvider)
+    public ProductController(IProductService productService, ILogger<ProductController> loggerProvider)
     {
         _productService = productService;
-        logger = loggerProvider.CreateLogger(nameof(ProductController));
+        logger = loggerProvider;
     }
 
 

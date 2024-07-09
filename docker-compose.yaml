@@ -20,6 +20,7 @@ services:
       - "3000:80"
     environment:
       - ASPNETCORE_URLS=http://+:80
+      - NEW_RELIC_LICENSE_KEY=${KEY_NEW_RELIC}
     networks:
       - asset_net
     depends_on:
