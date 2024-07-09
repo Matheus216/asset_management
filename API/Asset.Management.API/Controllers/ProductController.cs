@@ -10,16 +10,21 @@ namespace Asset.Management.API.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
+    private readonly ILogger logger; 
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, ILoggerProvider loggerProvider)
     {
         _productService = productService;
+        logger = loggerProvider.CreateLogger(nameof(ProductController));
     }
+
+
     [HttpGet]
     public async Task<ActionResult<Result<IEnumerable<Product>>>> GetListAsync()
     {
         try
         {
+            logger.LogInformation("Iniciado processo de busca..");
             var response = await _productService.GetListAsync();
 
             if ((response?.Success ?? false) == false)

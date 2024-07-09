@@ -1,34 +1,10 @@
 version: '3.8'
 
 services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - web
-    networks:
-      - asset_net
-  web:
-    image: letodev/asset_api
-    build:
-      context: ./API/
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"
-    environment:
-      - ASPNETCORE_URLS=http://+:80
-    networks:
-      - asset_net
-    depends_on:
-      - mongodb
-      - redis
   mongodb:
     image: letodev/mongo-asset-db
     build:
-      context: ./DB/
+      context: ../DB/
       dockerfile: Dockerfile
     ports:
       - "27017:27017"
@@ -43,7 +19,7 @@ services:
   agent:
     container_name: newrelic-infra
     build:
-      context: ./newrelic-infra/
+      context: ../newrelic-infra/
       dockerfile: newrelic-infra.dockerfile
     cap_add:
       - SYS_PTRACE
